@@ -1,4 +1,4 @@
-package com.novocode.junit;
+package testng_interface;
 
 import org.scalatools.testing.Result;
 

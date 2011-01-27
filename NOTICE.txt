@@ -1,0 +1,5 @@
+testng-interface
+Copyright (c) 2011, Steven Parkes.
+
+This product includes software developed by Stefan Zeiger
+(https://github.com/szeiger/junit-interface>).

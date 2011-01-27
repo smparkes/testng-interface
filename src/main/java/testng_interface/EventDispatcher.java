@@ -1,16 +1,19 @@
-package com.novocode.junit;
+package testng_interface;
 
 import java.io.IOException;
 import java.util.HashSet;
 
-import org.junit.runner.Description;
-import org.junit.runner.Result;
-import org.junit.runner.notification.Failure;
-import org.junit.runner.notification.RunListener;
+// import org.junit.runner.Description;
+// import org.junit.runner.Result;
+// import org.junit.runner.notification.Failure;
+// import org.junit.runner.notification.RunListener;
+import org.testng.ITestContext;
+import org.testng.ITestListener;
+import org.testng.ITestResult;
 import org.scalatools.testing.EventHandler;
 
 
-final class EventDispatcher extends RunListener
+final class EventDispatcher implements ITestListener
 {
   private final RichLogger logger;
   private final HashSet<String> reported = new HashSet<String>();
@@ -18,7 +21,10 @@ final class EventDispatcher extends RunListener
   private final boolean quiet, verbose;
   private OutputCapture capture;
 
-  EventDispatcher(RichLogger logger, EventHandler handler, boolean quiet, boolean verbose)
+  EventDispatcher(RichLogger logger,
+                  EventHandler handler,
+                  boolean quiet,
+                  boolean verbose)
   {
     this.logger = logger;
     this.handler = handler;
@@ -26,46 +32,58 @@ final class EventDispatcher extends RunListener
     this.verbose = verbose;
   }
 
+/*
   @Override
   public void testAssumptionFailure(Failure failure)
   {
     uncapture(true);
     postIfFirst(new TestAssumptionFailedEvent(failure));
   }
+*/
 
   @Override
-  public void testFailure(Failure failure)
+  public void onTestFailure(ITestResult result)
   {
     uncapture(true);
-    postIfFirst(new TestFailedEvent(failure));
+    postIfFirst(new TestFailedEvent(result));
   }
 
   @Override
-  public void testFinished(Description desc)
+  public void onTestFailedButWithinSuccessPercentage(ITestResult result) {}
+
+  @Override
+  public void onTestSuccess(ITestResult result)
   {
     uncapture(false);
-    postIfFirst(new TestFinishedEvent(desc));
+    postIfFirst(new TestFinishedEvent(result));
   }
 
   @Override
-  public void testIgnored(Description desc) { postIfFirst(new TestIgnoredEvent(desc)); }
+  public void onTestSkipped(ITestResult result) {
+      postIfFirst(new TestSkippedEvent(result));
+  }
 
   @Override
-  public void testStarted(Description description)
+  public void onTestStart(ITestResult result)
   {
-    debugOrInfo("Test "+AbstractEvent.buildName(description)+" started");
+    debugOrInfo("Test "+AbstractEvent.buildName(result)+" started");
     capture();
   }
 
   @Override
-  public void testRunFinished(Result result)
+  public void onFinish(ITestContext context)
   {
-    debugOrInfo("Test run finished: "+result.getFailureCount()+" failed, "+result.getIgnoreCount()+" ignored, "+
-      result.getRunCount()+" total, "+(result.getRunTime()/1000.0)+"s");
+      double runTime =
+          (context.getEndDate().getTime() - context.getStartDate().getTime())/
+          1000.0;
+      debugOrInfo("Test run finished: "+
+                  context.getFailedTests().size()+" failed, "+
+                  context.getSkippedTests().size()+" skipped, "+
+      context.getAllTestMethods().length+" total, "+(runTime)+"s");
   }
 
   @Override
-  public void testRunStarted(Description description)
+  public void onStart(ITestContext context)
   {
     debugOrInfo("Test run started");
   }

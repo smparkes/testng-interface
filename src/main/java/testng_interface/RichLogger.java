@@ -1,4 +1,4 @@
-package com.novocode.junit;
+package testng_interface;
 
 import org.scalatools.testing.Logger;
 
@@ -34,7 +34,7 @@ final class RichLogger
     final int m0 = m;
     for(int i=0; i<=m; i++)
     {
-      if(trace[i].toString().startsWith("org.junit."))
+      if(trace[i].toString().startsWith("org.testng."))
       {
         m = i-1;
         while(m > 0)

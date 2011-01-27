@@ -1,6 +1,6 @@
-package com.novocode.junit;
+package testng_interface;
 
-import org.junit.runner.Description;
+import org.testng.ITestResult;
 import org.scalatools.testing.Event;
 import org.scalatools.testing.Result;
 
@@ -34,8 +34,8 @@ abstract class AbstractEvent implements Event
 
   public void logTo(RichLogger logger) { }
 
-  static String buildName(Description desc)
+  static String buildName(ITestResult result)
   {
-    return desc.getClassName()+'.'+desc.getMethodName();
+    return result.getTestClass().getName()+'.'+result.getName();
   }
 }

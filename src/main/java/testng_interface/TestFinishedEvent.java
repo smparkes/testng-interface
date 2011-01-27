@@ -1,12 +1,14 @@
-package com.novocode.junit;
+package testng_interface;
 
-import org.junit.runner.Description;
+import org.testng.ITestResult;
 import org.scalatools.testing.Result;
 
 
 final class TestFinishedEvent extends AbstractEvent
 {
-  TestFinishedEvent(Description desc) { super(buildName(desc), null, Result.Success, null); }
+  TestFinishedEvent(ITestResult result) {
+      super(buildName(result), null, Result.Success, null);
+  }
 
   @Override
   public void logTo(RichLogger logger)

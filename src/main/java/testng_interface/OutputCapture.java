@@ -1,4 +1,4 @@
-package com.novocode.junit;
+package testng_interface;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;

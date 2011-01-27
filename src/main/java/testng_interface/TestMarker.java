@@ -1,4 +1,4 @@
-package com.novocode.junit;
+package testng_interface;
 
 /**
  * Implement this marker to make your test case or suite discoverable.
