@@ -7,7 +7,7 @@ object TestNGInterface extends Build {
     version := "0.2-SNAPSHOT",
     scalaVersion := "2.9.0-1",
     libraryDependencies ++= Seq(
-      "org.testng" % "testng" % "5.14.6",
+      "org.testng" % "testng" % "6.1.1",
       "org.scala-tools.testing" % "test-interface" % "0.5"
     )
   )
