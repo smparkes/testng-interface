@@ -3,10 +3,6 @@ package testng_interface;
 import java.io.IOException;
 import java.util.HashSet;
 
-// import org.junit.runner.Description;
-// import org.junit.runner.Result;
-// import org.junit.runner.notification.Failure;
-// import org.junit.runner.notification.RunListener;
 import org.testng.ITestContext;
 import org.testng.ITestListener;
 import org.testng.ITestResult;
